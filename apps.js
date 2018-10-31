@@ -1,10 +1,9 @@
+'use strict';
 //a variable that's an array of objects
 //objects are: storename, min hourly customers, max hourly customers, average cookies sold
 //random number generator (hour many customers showed per hour)-function in the object, 
 //total cookies sold.
-
 //define an object with a store
-'use strict';
 
 var pikeAndFirst = {
   storename: 'first and pike',
