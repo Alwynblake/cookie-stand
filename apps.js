@@ -5,7 +5,7 @@
 //total cookies sold.
 
 //define an object with a store
-var objectlipikeAndFirst = {
+var pikeAndFirst = {
   storename: 'first and pike',
   minCustPerHour: 23,
   maxCustPerHour: 65,
