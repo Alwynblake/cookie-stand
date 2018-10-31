@@ -13,7 +13,7 @@ var pikeAndFirst = {
   custPerHour: [],//generate a random number of customers
   cookiesPerHour: [],
   //each store should have varying hours of operation ==> use a for loop to do this.
-  hoursOfOps: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm'],
+  hoursOfOps: ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'],
   dailyTotal: 0,
   generateRandomCustPerHour: function (min, max) {
     for (var i = 0; i < this.hoursOfOps.length; i++) {
