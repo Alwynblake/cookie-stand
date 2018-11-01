@@ -20,7 +20,8 @@ var pikeAndFirst = {
       var randomCust = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
       this.custPerHour.push(randomCust);
     }
-    console.log('custPerHour', this.custPerHour);
+    //return the function
+    console.log('Pike And First - customers per hour', this.custPerHour);
   },
   generateHourlySales: function () {
     //line below will populate custPerHour array
@@ -33,9 +34,12 @@ var pikeAndFirst = {
       //this.dailyTotal = this.dailyTotal + perHour
       this.dailyTotal += perHour;
     }
-    console.log('cookiesPerHour', this.cookiesPerHour);
+
+    // console.log('cookiesPerHour', this.cookiesPerHour);
   },
 }
+pikeAndFirst.generateRandomCustPerHour();
+
 var seaTacAirport = {
   storename: 'SeaTac Airport',
   minCustPerHour: 3,
@@ -51,7 +55,8 @@ var seaTacAirport = {
       var randomCust = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
       this.custPerHour.push(randomCust);
     }
-    console.log('custPerHour', this.custPerHour);
+    //return the function
+    console.log('SeaTac Airport - customers per hour', this.custPerHour);
   },
   generateHourlySales: function () {
     //line below will populate custPerHour array
@@ -65,8 +70,11 @@ var seaTacAirport = {
       this.dailyTotal += perHour;
     }
     console.log('cookiesPerHour', this.cookiesPerHour);
+
   },
 }
+
+seaTacAirport.generateRandomCustPerHour()
 var seattleCenter = {
   storename: 'Seattle Center',
   minCustPerHour: 11,
@@ -82,7 +90,8 @@ var seattleCenter = {
       var randomCust = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
       this.custPerHour.push(randomCust);
     }
-    console.log('custPerHour', this.custPerHour);
+    console.log('Seattle Center - customers per hour', this.custPerHour);
+    // console.log('custPerHour', this.custPerHour);
   },
   generateHourlySales: function () {
     //line below will populate custPerHour array
@@ -98,6 +107,8 @@ var seattleCenter = {
     console.log('cookiesPerHour', this.cookiesPerHour);
   },
 }
+
+seattleCenter.generateRandomCustPerHour();
 var capitolHill = {
   storename: 'Capital Hill',
   minCustPerHour: 23,
@@ -113,7 +124,8 @@ var capitolHill = {
       var randomCust = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
       this.custPerHour.push(randomCust);
     }
-    console.log('custPerHour', this.custPerHour);
+    console.log('Seattle Center - customers per hour', this.custPerHour);
+    // console.log('custPerHour', this.custPerHour);
   },
   generateHourlySales: function () {
     //line below will populate custPerHour array
@@ -129,6 +141,7 @@ var capitolHill = {
     console.log('cookiesPerHour', this.cookiesPerHour);
   },
 }
+capitolHill.generateRandomCustPerHour();
 var Alki = {
   storename: 'Alki',
   minCustPerHour: 2,
@@ -144,7 +157,8 @@ var Alki = {
       var randomCust = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
       this.custPerHour.push(randomCust);
     }
-    console.log('custPerHour', this.custPerHour);
+    console.log('Alki - customers per hour', this.custPerHour);
+    // console.log('custPerHour', this.custPerHour);
   },
   generateHourlySales: function () {
     //line below will populate custPerHour array
@@ -160,3 +174,4 @@ var Alki = {
     console.log('cookiesPerHour', this.cookiesPerHour);
   },
 }
+Alki.generateRandomCustPerHour();
