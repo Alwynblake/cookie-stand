@@ -1,147 +1,101 @@
 'use strict';
-//a variable that's an array of objects
-//objects are: location, min hourly customers, max hourly customers, average cookies sold
-//random number generator (hour many customers showed ber hour)-function in the object, 
-//total cookies sold.
-//define an object with a store
-function createTable() { //Anchor to the html doc:
-  var mainEL = documemt.getElementById('main-content');
-  var tblEL = documemt.getElementById('table');
-  var theadEL = documemt.getElementById('thead');
-  var tbodyEL = documemt.getElementById('tbody');
-  var tfootEL = documemt.getElementById('tfoot');
+var locations = [];
 
-  mainEL.appendChild(tblEL);
-  tblEL.appendChild(theadEL);
-  tblEL.appendChild(tbodyEL);
-  tblEL.appendChild(tfootEL);
-
-  tblEL.id = 'storename-table';
-  theadEL.id = 'tbl-body';
-  tbodyEL.id = 'tbl-body';
-  tfootEL.id = 'tbl-body';
-  tblEL.className = 'tbl';
-}
-//each store should have varying hours of operation ==> use a for loop to do this.
-var hoursOfOps = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
-createTable();
-console.log('createTable', createTable);
-
-var stores = [];
-console.log('stores', stores);
-function Stores(
-  Name,
-  maxCustomersPerHour,
-  minCustomersPerHour,
-  averageCookiesSold
-) {
-  this.Name = Name;
-  this.maxCustomersPerHour = maxCustomersPerHour;
+function Location(storeLocation, minCustomersPerHour, maxCustPerHour, avgCookiesSoldPerCust, hoursOpen) {
+  this.storeLocation = storeLocation;
   this.minCustomersPerHour = minCustomersPerHour;
-  this.averageCookiesSold = averageCookiesSold;
-  this.totalCookies = 0;
-  stores.push(this);
+  this.maxCustPerHour = maxCustPerHour;
+  this.avgCookiesSoldPerCust = avgCookiesSoldPerCust;
+  this.customersPerHour = [];
+  this.cookiesPerHour = [];
+  this.hoursOpen = hoursOpen;
+  this.totalCookiesPerDay = 0;
+
+  locations.push(this);
+
+  this.addCustomersPerHour(this.minCustomersPerHour, this.maxCustPerHour);
+  this.addHourlySales(); // Called this function in the right place to trigger data generation
   this.render();
 }
-console.log(Stores);
 
-Stores.prototype.randNum = function () {
-  var ranNum = Math.floor(
-    Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour) +
-    this.minCustomersPerHour
-  );
-  return Math.floor(ranNum * this.averageCookiesSold);
-};
-
-Stores.prototype.render = function () {
-  var theadEL = document.getElementById('table-head');
-  var tbodyEL = document.getElementById('table-body');
-  var tfootEL = document.getElementById('table-foot');
-
-  var bodyrowEL = document.createElement('tr');
-  var bodyHead = document.createElement('th');
-  bodyHead.textContent = this.Name;
-  tbodyEL.appendChild(bodyrowEL);
-  bodyrowEL.appendChild(bodyHead);
-
-  for (var i = 0; i < openHours.length; i++) {
-    var tdEL = document.createElement('td');
-    tdEL.textContent = this.randNum();
-    bodyrowEL.appendChild(tdEL);
+Location.prototype.addCustomersPerHour = function (min, max) {
+  for (var i = 0; i < this.hoursOpen.length; i++) {
+    var randomCustNumber = Math.floor(Math.random() * (max - min + 1) + min);
+    this.customersPerHour.push(randomCustNumber);
   }
 };
 
-Stores.prototype.render();
+Location.prototype.addHourlySales = function () {
+  // Will generate number of customers per hour using the min/cust and max/cust
+  // this.addCustomersPerHour(this.minCustomersPerHour, this.maxCustPerHour);
+  // loop to create and push a cookies per hour amount to pair with each hour open
+  for (var i = 0; i < this.hoursOpen.length; i++) {
+    var perHour = Math.round(this.customersPerHour[i] * this.avgCookiesSoldPerCust);
+    this.cookiesPerHour.push(perHour);
+    // creates a total amount of cookies for the whole day by adding up each cookies-per-hour amount
+    this.totalCookiesPerDay += perHour;
+  }
+}
 
-new Stores('1st and Pike', 65, 23, 6.3);
-new Stores('seaTac', 24, 3, 1.2);
-new Stores('Seattle Center', 38, 11, 3.7);
-new Stores('Capitol Hill', 38, 20, 2.3);
-  //   createTable();
-//   console.log('createTable', createTable);
+Location.prototype.render = function () {
+  var tableBodyElement = document.getElementById('tbl-body'); // Anchor to sales.html element w/ ID  table-content
+  // var tableHeaderElement = document.createElement('thead'); // This will create a table header element tag
+  var tableRowElement = document.createElement('tr'); // This will create a table row element tag
+
+  var tableHeadElement = document.createElement('th'); // This will create a table head element tag
+  tableHeadElement.textContent = this.storeLocation;
+  tableRowElement.appendChild(tableHeadElement);
+
+  for (var i = 0; i < this.hoursOpen.length; i++) {
+    var tdEl = document.createElement('td');
+    tdEl.textContent = this.cookiesPerHour[i];
+    tableRowElement.appendChild(tdEl);
+  }
+
+  tableBodyElement.appendChild(tableRowElement);
+};
+
+function createHeader() {
+  var tableHeaderElement = document.createElement('thead');
+  tableHeaderElement.id = 'tbl-head';
+  return tableHeaderElement;
+}
+
+function createFooter() {
+  var tableFooterElement = document.createElement('tfoot');
+  tableFooterElement.id = 'tbl-foot';
+  return tableFooterElement;
+}
+
+function createTable() {
+  // This function is used to establish ONE SINGLE table in the DOM for us to work with when we start rendering individual rows for each storeLocation
+  //step1-DOM: create an element
+  var mainElement = document.getElementById('main-content');
+  var tableElement = document.createElement('table');
+  var tableBodyElement = document.createElement('tbody');
+  //step2-DOM: provide content for the element
+  tableElement.id = 'daily-sales-table';
+  tableBodyElement.id = 'tbl-body';
+
+  //step3-DOM: append the element to the page (in a specific place)
+  mainElement.appendChild(tableElement);
+  tableElement.appendChild(createHeader());
+  tableElement.appendChild(tableBodyElement);
+  tableElement.appendChild(createFooter());
+}
+
+// NOTE: BELOW IS THE EXECUTION OF ALL THE CODE WE WROTE ABOVE.
+// WITHOUT THE CALLS BELOW, NOTHING WILL RUN.
+createTable();
+
+console.log(locations);
+
+// inputs to create then display table with locations
+var firstAndPike = new Location('1st and Pike', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
+var seatacAirport = new Location('Sea-Tac Airport', 3, 24, 1.2, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
+var seattleCenter = new Location('Seattle Center', 11, 38, 3.7, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
+var capitolHill = new Location('Capitol Hill', 20, 38, 2.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
+var Alki = new Location('Alki', 2, 16, 4.6, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
 
 
-// var storename = [];
-// console.log('store name', storename);
-// //generate a number for individual objects
-// function storename (
-//   name,
-//   minCustPerHour,
-//   maxCustPerHour,
-//   avgCookiesPerCust,
-// )
-// {
-// //generate a random number of customers???
-//  this.name = name,
-//  this.maxCustPerHour=maxCustPerHour;
-//  this.avgCookiesPerCust = avgCookiesPerCust;
-//  this.totalCookies = 0;
-//  storename.push(this);
-//  this.render();
-// }
-// console.log(storename);
-
-
-//     //line below will populate custPerHour array
-//     storename.prototype.randNum=function(){
-//       var ranNum = Math.floor (
-//           Math.random()*(this.maxCustPerHour - this.minCustPerHour)+ this.minCustPerHour);
-//           return Math.floor(ranNum *  this.avgCookiesPerCust);
-//       };
-
-//       stores
-//       )
-//     }
-//     this.generateRandomCustPerHour(this.minCustPerHour, this.maxCustPerHour);
-
-//     for (var i = 0; i < this.hoursOfOps.length; i++) {
-//       var perHour = Math.round(this.custPerHour[i] * this.avgCookiesPerCust);
-//       this.cookiesPerHour.push(perHour);
-
-//       //this.dailyTotal = this.dailyTotal + perHour
-//     }
-//     this.dailyTotal = this.dailyTotal + perHour;
-//   },
-
-//   render: function () {
-//     //line below will generate hourly sales which also generates customers per hour
-//     this.generateGourlySales();
-
-//   },
-// };
-// //create an empty container to hold each store information:
-
-// for (vari = 0; i < this.hoursOfOps.length; i++) {
-//   var hourly = document.createElement('li');
-//   hourly.textContent = `${this.hoursOfOps[i]}: ${this.cookiesPerHour[i]}} cookies`;
-// }
-// //step2-DOM: provide content for the element
-// title.textContent = this.name;
-// total.textContent = `Total: ${this.dailyTotal}cookies`;
-
-// //step3-DOM: append the element to the page (in a specific place)
-// container.appendChild(total);
-// console.log('container', container);
-
-
-// };
+console.log(locations);
