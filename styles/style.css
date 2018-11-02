@@ -1,9 +1,12 @@
 body {
-        background-color: lightblue;
+    background-color: yellow;
+    color: black;
+}
+        /* background-color: lightblue;
         color: white;
         text-align: left;
         margin-left: 25px;
-    }
+    } */
 
 header {
     color: lightgray;
