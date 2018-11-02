@@ -20,9 +20,10 @@ function Location(storeLocation, minCustomersPerHour, maxCustPerHour, avgCookies
   this.render();
 }
 
-Location.prototype.addCustomersPerHour = function (min, max) {
-  for (var i = 0; i < hoursOpen.length; i++) {
-    var randomCustNumber = Math.floor(Math.random() * (max - min + 1) + min);
+Location.prototype.addCustomersPerHour = function (minCustomersPerHour, maxCustomersPerHour) {
+  for (var i = 0; i < this.hoursOpen.length; i++) {
+    //displays cookies per hour
+    var randomCustNumber = Math.floor(Math.random() * (maxCustomersPerHour - minCustomersPerHour + 1) + minCustomersPerHour);
     this.customersPerHour.push(randomCustNumber);
   }
 };
@@ -31,7 +32,7 @@ Location.prototype.addHourlySales = function () {
   // Will generate number of customers per hour using the min/cust and max/cust
   // this.addCustomersPerHour(this.minCustomersPerHour, this.maxCustPerHour);
   // loop to create and push a cookies per hour amount to pair with each hour open
-  for (var i = 0; i < hoursOpen.length; i++) {
+  for (var i = 0; i < this.hoursOpen.length; i++) {
     var perHour = Math.round(this.customersPerHour[i] * this.avgCookiesSoldPerCust);
     this.cookiesPerHour.push(perHour);
     // creates a total amount of cookies for the whole day by adding up each cookies-per-hour amount
@@ -40,14 +41,16 @@ Location.prototype.addHourlySales = function () {
 }
 
 Location.prototype.render = function () {
+  // this.addHourlySales();
   var tableBodyElement = document.getElementById('tbl-body'); // Anchor to sales.html element w/ ID  table-content
-  // var tableHeaderElement = document.createElement('thead'); // This will create a table header element tag
   var tableRowElement = document.createElement('tr'); // This will create a table row element tag
-  var tableHeadElement = document.createElement('th'); // This will create a table head element tag
+  var tableHeadElement = document.createElement('th'); // This will create a table header element tag
+  //var tableHeadElement = document.createElement('th'); // This will create a table head element tag
   tableHeadElement.textContent = this.storeLocation;
   tableRowElement.appendChild(tableHeadElement);
 
-  for (var i = 0; i < hoursOpen.length; i++) {
+  for (var i = 0; i < this.hoursOpen.length; i++) {
+    //creates a table
     var tdEl = document.createElement('td');
     tdEl.textContent = this.cookiesPerHour[i];
     tableRowElement.appendChild(tdEl);
@@ -93,3 +96,4 @@ var seatacAirport = new Location('SeaTac Airport', 3, 24, 1.2, ['6am', '7am', '8
 var seattleCenter = new Location('Seattle Center', 11, 38, 3.7, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
 var capitolHill = new Location('Capitol Hill', 20, 38, 2.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
 var Alki = new Location('Alki', 2, 16, 4.6, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm']);
+
