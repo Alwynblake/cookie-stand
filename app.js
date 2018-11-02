@@ -139,3 +139,19 @@ new Store('SeaTac', 3, 24, 1.2);
 new Store('Seattle Center', 11, 38, 3.7);
 new Store('Capitol Hill', 20, 38, 2.3);
 new Store('Alki', 2, 16, 4.6);
+
+document.getElementById('sales-form').addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  var name = event.target.storename.value;
+  var min = event.target.minCustPerHour.value;
+  var max = event.target.maxCustPerHour.value;
+  var avg = event.target.avgCookiesPerCust.value;
+
+  new Store(name, minCustPerHour, maxCustPerHour, avgCookiesPerCust);
+
+  event.target.storename.value = '';
+  event.target.minCustPerHour.value = '';
+  event.target.maxCustPerHour.value = '';
+  event.target.avgCookiesPerCust.value = '';
+});
