@@ -45,6 +45,7 @@ Store.prototype.render = function () {
   //step3-DOM: append the element to the page (in a specific place):
   trEl.appendChild(thEl);
   //each store should have varying hours of operation ==> use a for loop to do this:
+  //assistance provided by Ahmad:
   for (var i = 0; i < hoursOfOps.length; i++) {
     var tdEl = document.createElement('td');
     tdEl.textContent = this.cookiesPerHour[i];
