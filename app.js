@@ -148,7 +148,7 @@ document.getElementById('sales-form').addEventListener('submit', function (event
   var max = event.target.maxCustPerHour.value;
   var avg = event.target.avgCookiesPerCust.value;
 
-  new Store(name, minCustPerHour, maxCustPerHour, avgCookiesPerCust);
+  new Store(storename, minCustPerHour, maxCustPerHour, avgCookiesPerCust);
 
   event.target.storename.value = '';
   event.target.minCustPerHour.value = '';
