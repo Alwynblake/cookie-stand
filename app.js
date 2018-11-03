@@ -105,6 +105,7 @@ function createTableFooter() {
   var trEl = document.createElement('tr');
   tfootEl.id = 'tbl-foot';
   var emptyThEl = document.createElement('th');
+  emptyThEl.textContent = 'Hourly Totals';
   trEl.appendChild(emptyThEl);
 
   var grandTotal = 0;
