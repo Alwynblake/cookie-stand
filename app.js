@@ -155,6 +155,4 @@ document.getElementById('sales-form').addEventListener('submit', function (event
   event.target.min.value = '';
   event.target.max.value = '';
   event.target.avg.value = '';
-
-
 });
